@@ -65,6 +65,7 @@ public class Sudoku {
             colFields[i] = fields[i][column];
         }
         return colFields;
+
     }
 
 
