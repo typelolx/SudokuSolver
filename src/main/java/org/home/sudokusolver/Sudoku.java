@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Sudoku {
 
-    public static Integer[] AVAILABLE_DIMENSIONS = new Integer[]{2,4,9,16,25,36,49};
+    public static Integer[] AVAILABLE_DIMENSIONS = new Integer[]{4,9,16,25,36,49};
 
     private int dimension;
 
@@ -23,10 +23,13 @@ public class Sudoku {
 
         obtainDimension(values);
 
-        for (int i = 0; i < values.length; ++i) {
-            for (int j = 0; i < values[i].length; ++j) {
+        fields = new Field[dimension][dimension];
+
+        for (int i = 0; i < dimension; ++i) {
+            for (int j = 0; j < dimension; ++j) {
                 Field field = new Field(i, j);
                 field.setValue(values[i][j]);
+                fields[i][j] = field;
             }
         }
     }
@@ -48,6 +51,21 @@ public class Sudoku {
         }
     }
 
+    public Field getField(int row, int collumn){
+        return fields[row][collumn];
+    }
+
+    public Field[] getRow(int row){
+        return fields[row];
+    }
+
+    public Field[] getColumn(int column){
+        Field[] colFields = new Field[dimension];
+        for(int i = 0;i<dimension;++i){
+            colFields[i] = fields[i][column];
+        }
+        return colFields;
+    }
 
 
 }
