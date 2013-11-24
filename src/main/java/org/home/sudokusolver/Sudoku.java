@@ -1,17 +1,12 @@
 package org.home.sudokusolver;
 
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-/**
- * Created by Type on 23.11.13.
- */
+
 public class Sudoku {
 
-    public static Integer[] AVAILABLE_DIMENSIONS = new Integer[]{4,9,16,25,36,49};
+    public static final Integer[] AVAILABLE_DIMENSIONS = new Integer[]{4,9,16,25,36,49};
 
     private int dimension;
 
@@ -43,11 +38,11 @@ public class Sudoku {
         dimension = values.length;
 
         for (Integer[] value : values) {
-            if (value.length != dimension) throw new IllegalArgumentException();
+            if (value.length != dimension) throw new IllegalArgumentException("Not square matrix!");
         }
 
         if(!Arrays.asList(AVAILABLE_DIMENSIONS).contains(dimension)){
-            throw  new IllegalArgumentException();
+            throw  new IllegalArgumentException("Unsupportable dimension");
         }
     }
 
@@ -68,5 +63,30 @@ public class Sudoku {
 
     }
 
+    public Field[][] getPartView(){
+        Field[][] parts = new Field[dimension][dimension];
+
+        int rowsInPath = (int) Math.sqrt(dimension);
+
+        for(int partNum = 0; partNum < dimension; ++partNum){
+              for(int i = 0; i < rowsInPath; ++i){
+                  for(int j = 0; j < rowsInPath;++j){
+                      int rowNum = (partNum / rowsInPath) * rowsInPath + i;
+                      int colNum = ((partNum ) % rowsInPath) * rowsInPath + j;
+                      parts[partNum][i*rowsInPath + j] = fields[rowNum][colNum];
+                  }
+              }
+        }
+
+        return parts;
+    }
+
+    public Field[] getPart(int partCount){
+
+        if(partCount > dimension || partCount < 1) throw new IllegalArgumentException("Wrong part id");
+
+        return getPartView()[partCount-1];
+
+    }
 
 }

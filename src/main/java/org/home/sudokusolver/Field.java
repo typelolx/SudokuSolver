@@ -5,9 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Type on 22.11.13.
- */
 public class Field {
 
     private List<Integer> possibleValues;
@@ -46,6 +43,10 @@ public class Field {
         possibleValues.addAll(values);
     }
 
+    @Override
+    public String toString() {
+        return getValue()==null?"?":getValue().toString();
+    }
 
     public int getCollumn() {
         return collumn;
